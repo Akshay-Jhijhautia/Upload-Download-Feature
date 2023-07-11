@@ -9,6 +9,19 @@ async function getAllData(req, res) {
   }
 }
 
+async function readCsvFile(req, res) {
+  console.log("line 13 in controller");
+  const file = req.file;
+  if (!file) {
+    res.status(400).send("No file uploaded");
+    return;
+  }
+  const data = await CustomerService.readCsvFile(file);
+  console.log(data);
+  return res.status(200).json({ message: "Success" });
+}
+
 module.exports = {
   getAllData,
+  readCsvFile,
 };
