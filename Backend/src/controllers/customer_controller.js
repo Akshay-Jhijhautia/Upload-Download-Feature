@@ -10,15 +10,17 @@ async function getAllData(req, res) {
 }
 
 async function readCsvFile(req, res) {
-  console.log("line 13 in controller");
-  const file = req.file;
-  if (!file) {
-    res.status(400).send("No file uploaded");
-    return;
+  try {
+    const file = req.file;
+    if (!file) {
+      res.status(400).send("No file uploaded");
+      return;
+    }
+    CustomerService.readCsvFile(file);
+    return res.status(200).json({ message: "Success" });
+  } catch (error) {
+    return res.status(400).json({ error: error });
   }
-  const data = await CustomerService.readCsvFile(file);
-  console.log(data);
-  return res.status(200).json({ message: "Success" });
 }
 
 module.exports = {

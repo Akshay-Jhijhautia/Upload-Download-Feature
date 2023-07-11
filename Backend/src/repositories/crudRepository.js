@@ -3,13 +3,13 @@ class CrudRepository {
     this.model = model;
   }
 
-  async create(data) {
-    const response = await this.model.create(data);
+  async getAllData() {
+    const response = await this.model.findAll();
     return response;
   }
 
-  async getAllData() {
-    const response = await this.model.findAll();
+  async saveCsvToDatabase(data) {
+    const response = await this.model.bulkCreate(data);
     return response;
   }
 }

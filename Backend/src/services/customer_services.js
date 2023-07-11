@@ -13,17 +13,24 @@ async function getAllData() {
   }
 }
 
-async function readCsvFile(file) {
+function readCsvFile(file) {
   const results = [];
   fs.createReadStream(file.path)
     .pipe(csv())
     .on("data", (data) => {
       results.push(data);
     })
-    .on("end", () => {
-      console.log("line 26 in services", results);
+    .on("end", async () => {
+      try {
+        await customerRepository.saveCsvToDatabase(results);
+        return "Successfully saved the data in database";
+      } catch (error) {
+        console.log(error);
+        return new Error("Something went wrong");
+      } finally {
+        fs.unlinkSync(file.path);
+      }
     });
-  return "Success";
 }
 
 module.exports = {

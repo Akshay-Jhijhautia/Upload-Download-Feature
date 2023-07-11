@@ -1,4 +1,4 @@
-Customer name,Relationship Manager Name,Loan Amount,Documents Submitted,Documents Reviewed,Loan Disbursed
+Customer_Name,Relationship_Manager_Name,Loan_Amount,Documents_Submitted,Documents_Reviewed,Loan_Disbursed
 Aakash,Akshit,100000,Yes,Yes,Yes
 Sanya,Abhay,200000,Yes,Yes,Yes
 Rohan,Chandrashekhar,115000,No,No,No
