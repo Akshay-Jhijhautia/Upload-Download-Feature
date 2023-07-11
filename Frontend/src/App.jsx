@@ -8,14 +8,14 @@ import CustomerDetails from "./components/CustomerDetails";
 function App() {
   const [customerData, setCustomerData] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [upload, setUpload] = useState(false);
+  const [value, setValue] = useState(false);
 
   useEffect(() => {
     apiClient
       .get("details")
       .then((res) => setCustomerData(res.data))
       .catch((error) => console.log(error.message));
-  }, [upload]);
+  }, [value]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -38,7 +38,8 @@ function App() {
         },
       })
       .then((res) => {
-        setUpload(!upload);
+        setSelectedFile(null);
+        setValue(!value);
         console.log(res.data);
       })
       .catch((err) => console.log(err.message));
@@ -74,6 +75,14 @@ function App() {
           disabled={!selectedFile}
         >
           Upload
+        </Button>
+        <Button
+          style={{ marginLeft: "1%" }}
+          variant="contained"
+          color="primary"
+          onClick={() => console.log("Download button clicked")}
+        >
+          Download
         </Button>
       </form>
     </>
