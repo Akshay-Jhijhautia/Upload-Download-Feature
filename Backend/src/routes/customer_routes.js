@@ -6,7 +6,7 @@ const upload = multer({ dest: "tmp/csv" });
 
 const { CustomerController } = require("../controllers");
 
-router.get("/", CustomerController.getAllData);
+router.get("/details", CustomerController.getAllData);
 router.post("/upload", upload.single("file"), CustomerController.readCsvFile);
 
 module.exports = router;
