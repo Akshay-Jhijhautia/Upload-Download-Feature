@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
+import { CSVLink } from "react-csv";
 
 import Navbar from "./components/Navbar";
 import apiClient from "./services/api-client";
@@ -42,6 +43,22 @@ function App() {
     hiddenInputValue.current.click();
   }
 
+  const data = customerData.data;
+  const headers = [
+    { label: "Id", key: "id" },
+    { label: "Customer Name", key: "Customer_Name" },
+    { label: "Relationship Manager Name", key: "Relationship_Manager_Name" },
+    { label: "Loan Amount", key: "Loan_Amount" },
+    { label: "Documents Submitted", key: "Documents_Submitted" },
+    { label: "Documents Reviewed", key: "Documents_Reviewed" },
+    { label: "Loan Disbursed", key: "Loan_Disbursed" },
+  ];
+  const csvLink = {
+    filename: "loan-data.csv",
+    headers: headers,
+    data: data,
+  };
+
   return (
     <>
       <Navbar />
@@ -61,14 +78,26 @@ function App() {
       >
         Upload File
       </Button>
-      <Button
-        style={{ marginLeft: "1%" }}
-        variant="contained"
-        color="primary"
-        onClick={() => console.log("Download Button clicked")}
-      >
-        Download File
-      </Button>
+
+      {customerData.length === 0 ? (
+        <Button
+          style={{ marginLeft: "1%" }}
+          variant="contained"
+          color="primary"
+        >
+          Download File
+        </Button>
+      ) : (
+        <CSVLink {...csvLink}>
+          <Button
+            style={{ marginLeft: "1%" }}
+            variant="contained"
+            color="primary"
+          >
+            Download File
+          </Button>
+        </CSVLink>
+      )}
     </>
   );
 }
