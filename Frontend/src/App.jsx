@@ -56,7 +56,7 @@ function App() {
   const csvLink = {
     filename: "loan-data.csv",
     headers: headers,
-    data: data,
+    data: customerData.length === 0 ? "" : data,
   };
 
   return (
@@ -79,7 +79,7 @@ function App() {
         Upload File
       </Button>
 
-      {customerData.length === 0 ? (
+      <CSVLink {...csvLink}>
         <Button
           style={{ marginLeft: "1%" }}
           variant="contained"
@@ -87,17 +87,7 @@ function App() {
         >
           Download File
         </Button>
-      ) : (
-        <CSVLink {...csvLink}>
-          <Button
-            style={{ marginLeft: "1%" }}
-            variant="contained"
-            color="primary"
-          >
-            Download File
-          </Button>
-        </CSVLink>
-      )}
+      </CSVLink>
     </>
   );
 }
