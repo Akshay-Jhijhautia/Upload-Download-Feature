@@ -38,9 +38,9 @@ function App() {
     }
   };
 
-  const handleUpload = async () => {
+  function handleUpload() {
     hiddenInputValue.current.click();
-  };
+  }
 
   return (
     <>
@@ -61,7 +61,6 @@ function App() {
       >
         Upload File
       </Button>
-
       <Button
         style={{ marginLeft: "1%" }}
         variant="contained"
