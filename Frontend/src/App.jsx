@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
 
 import Navbar from "./components/Navbar";
@@ -7,8 +7,8 @@ import CustomerDetails from "./components/CustomerDetails";
 
 function App() {
   const [customerData, setCustomerData] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [value, setValue] = useState(false);
+  const hiddenInputValue = useRef(null);
 
   useEffect(() => {
     apiClient
@@ -18,73 +18,58 @@ function App() {
   }, [value]);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      apiClient
+        .post("upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          setValue(!value);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err.message));
+    }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!selectedFile) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
-    apiClient
-      .post("upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setSelectedFile(null);
-        setValue(!value);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err.message));
+  const handleUpload = async () => {
+    hiddenInputValue.current.click();
   };
 
   return (
     <>
       <Navbar />
       <CustomerDetails customerData={customerData} />
-      <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          accept=".csv"
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-          id="upload-file"
-        />
-        <label htmlFor="upload-file">
-          <Button
-            style={{ marginLeft: "10%" }}
-            component="span"
-            variant="contained"
-            color="primary"
-          >
-            SELECT FILE
-          </Button>
-        </label>
-        <Button
-          style={{ marginLeft: "1%" }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!selectedFile}
-        >
-          Upload
-        </Button>
-        <Button
-          style={{ marginLeft: "1%" }}
-          variant="contained"
-          color="primary"
-          onClick={() => console.log("Download button clicked")}
-        >
-          Download
-        </Button>
-      </form>
+      <input
+        type="file"
+        accept=".csv"
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+        ref={hiddenInputValue}
+      />
+      <Button
+        style={{ marginLeft: "10%" }}
+        variant="contained"
+        color="primary"
+        onClick={handleUpload}
+      >
+        Upload File
+      </Button>
+
+      <Button
+        style={{ marginLeft: "1%" }}
+        variant="contained"
+        color="primary"
+        onClick={() => console.log("Download Button clicked")}
+      >
+        Download File
+      </Button>
     </>
   );
 }
