@@ -11,21 +11,27 @@ module.exports = {
       },
       Customer_Name: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       Relationship_Manager_Name: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       Loan_Amount: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       Documents_Submitted: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       Documents_Reviewed: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       Loan_Disbursed: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

@@ -13,12 +13,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   Customer.init(
     {
-      Customer_Name: DataTypes.STRING,
-      Relationship_Manager_Name: DataTypes.STRING,
-      Loan_Amount: DataTypes.STRING,
-      Documents_Submitted: DataTypes.STRING,
-      Documents_Reviewed: DataTypes.STRING,
-      Loan_Disbursed: DataTypes.STRING,
+      Customer_Name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Relationship_Manager_Name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Loan_Amount: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Documents_Submitted: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Documents_Reviewed: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Loan_Disbursed: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,
