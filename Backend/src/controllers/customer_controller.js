@@ -13,13 +13,13 @@ async function readCsvFile(req, res) {
   try {
     const file = req.file;
     if (!file) {
-      res.status(400).send("No file uploaded");
+      res.status(409).send("No file uploaded");
       return;
     }
-    CustomerService.readCsvFile(file);
+    await CustomerService.readCsvFile(file);
     return res.status(200).json({ message: "Success" });
   } catch (error) {
-    return res.status(400).json({ error: error });
+    return res.status(409).json({ error: error });
   }
 }
 

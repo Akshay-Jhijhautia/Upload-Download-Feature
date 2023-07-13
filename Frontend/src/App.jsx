@@ -54,7 +54,7 @@ function App() {
     { label: "Loan Disbursed", key: "Loan_Disbursed" },
   ];
   const csvLink = {
-    filename: "loan-data.csv",
+    filename: "Loan-data.csv",
     headers: headers,
     data: customerData.length === 0 ? "" : data,
   };
